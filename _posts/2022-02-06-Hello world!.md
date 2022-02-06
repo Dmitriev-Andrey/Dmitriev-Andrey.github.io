@@ -2,7 +2,9 @@
 layout: post
 ---
 
-I've started a long path!
-I'll try to change my imperative developer mind.
-I want to learn Scala and related technologies.
-This blog will be describe my way, intresting features, methods and solutions.
+I've started a long journey!
+
+I will try to change my imperative developer mind.
+I've been developing in Java for about 5 years and I think I need to enrich my experience.
+I want to learn functional programming in Scala and related technologies (Akka, Spark, etc.).
+This blog will describe my path, interesting functions, methods and solutions.
