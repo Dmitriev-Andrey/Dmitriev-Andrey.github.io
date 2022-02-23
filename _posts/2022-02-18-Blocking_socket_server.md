@@ -83,11 +83,11 @@ public class Server {
 }
 ```
 
-If you notice, I use [`try with resource`](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html) so java close socket and streams for me.
+If you notice, I use [`try with resource`](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html) so java closes socket and streams for me.
 
 ### What do you think is the problem with our server?
 
-When the server responds it closes the connection and stops. But what does client want to send next message? And what are about another clients?
+When the server responds it closes the connection and stops. What if the client wants to send the following message? And what are about another clients?
 Try to solve this problems:
 ```java
 public void run() throws IOException {
@@ -217,3 +217,5 @@ public class Client {
 Client is easier than server. We create socket, input and output stream, send and read message.
 
 Most servers have similar logic. But what if we want to handle a lot of clients? Hundreds of thousands! We create a lot of threads, or if we use threadpool all threads will be busy. We will solve this problem in next article.
+
+All code is here: https://github.com/Dmitriev-Andrey/sockets
