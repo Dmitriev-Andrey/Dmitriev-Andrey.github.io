@@ -4,24 +4,24 @@ title: Blocking socket server
 excerpt: How simple server on blocking socket work
 ---
 ## What is a socket?
-Network socket is a good abstraction for communications in Internet. But it's low-level object, because we don't use different protocols, like http, and can implement more efficient specification for our cases.
+A network socket is a good abstraction for communications on the Internet. But it's a low-level object, because we don't use different protocols, like HTTP, and can implement a more efficient specification for our cases.
 
 ## How does it work?
-We have two points for communication: server and client. They have their own features.
-In general, work-pipeline looks like: 
-1. A server listens to a specific port and wait connection from client.
-2. Client try to connect.
-3. Server accepts connection, create channels for input and output and wait message from client.
-4. Client send message.
-5. Server read message, handle it and answer.
-6. Client read and handle answer.
-7. Close connection or repeate communication
+We have two points for communication: server and client. They have their features.
+In general, the work pipeline looks like this: 
+1. A server listens on a specific port and waits for a connection from a client.
+2. The client tries to connect.
+3. The server accepts the connection, creates channels for input and output, and waits for a message from the client.
+4. The client sends the message.
+5. The server reads the message, handles it, and responds.
+6. The client reads and handles the answer.
+7. Closing the connection or repeating the communication
 
 ## What's about code?
 
 Let's try to create a simple server and client using sockets.
 
-First, business logic is a calculating [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). It's one recursive function:
+First, business logic is calculating [the Fibonacci numbers](https://en.wikipedia.org/wiki/Fibonacci_number). It's one recursive function:
 ```java
 public class Calculator {
     public static long fib(int k) {
@@ -32,11 +32,11 @@ public class Calculator {
     }
 }
 ```
-This algotithm isn't efficient and I implement it in separate class, because I will be use it in the next article.
+This algorithm isn't efficient and I implement it in a separate class because I will be using it in the next article.
 
-Second, server. We need listen port, establish a connection, read message, handle and respond.
-Input and output message are number (for simplicity).
-Okey, sounds not hard:
+Second, server. We need to listen port, establish a connection, read a message, handle and respond.
+Input and output messages are numbers (for simplicity).
+Okey, sounds not too hard:
 
 ```java
 public class Server {
@@ -48,7 +48,7 @@ public class Server {
     }
 
     /**
-    * This method implements all logic for handle connection.
+    * This method implements all logic for handling a connection.
     */
     public void run() throws IOException {
         try (ServerSocket serverSocket = new ServerSocket(port); // listen port
@@ -87,8 +87,8 @@ If you notice, I use [`try with resource`](https://docs.oracle.com/javase/tutori
 
 ### What do you think is the problem with our server?
 
-When the server responds it closes the connection and stops. What if the client wants to send the following message? And what are about another clients?
-Try to solve this problems:
+When the server responds it closes the connection and stops. What if the client wants to send the following message? And what are about other clients?
+Try to solve these problems:
 ```java
 public void run() throws IOException {
     try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -130,7 +130,7 @@ public void run() throws IOException {
     }
 }
 ```
-I've added two cycles (1) and (2). (1) - this cycle handles new connection, (2) - handles new message from client. Also (4) - special command for close communication. (3) - timeout to wait for an incoming message, without it the server will hang if the client disconnects and does not send "exit".
+I've added two cycles (1) and (2). (1) - this cycle handles new connections, (2) - handles new messages from clients. Also (4) - special command for close communication. (3) - timeout to wait for an incoming message, without it the server will hang if the client disconnects and does not send "exit".
 
 ### What's wrong again?
 
@@ -184,8 +184,8 @@ private void handleSocket(Socket socket) {
 }
 ```
 
-What is change? Not a lot, really. We give new connection and handle it in another thread.
-And that's all. You can test server using next client:
+What is change? Not a lot. We give a new connection and handle it in another thread.
+And that's all. You can test the server using the next client:
 ```java
 public class Client {
     public static void main(String[] args) throws IOException {
@@ -214,8 +214,8 @@ public class Client {
 }
 ```
 
-Client is easier than server. We create socket, input and output stream, send and read message.
+The client is easier than the server. We create a socket, input and output streams, send and read messages.
 
-Most servers have similar logic. But what if we want to handle a lot of clients? Hundreds of thousands! We create a lot of threads, or if we use threadpool all threads will be busy. We will solve this problem in next article.
+Most servers have similar logic. But what if we want to handle a lot of clients? Hundreds of thousands! We create a lot of threads, or if we use a thread pool all threads will be busy. We will solve this problem in the next article.
 
 All code is here: https://github.com/Dmitriev-Andrey/sockets
