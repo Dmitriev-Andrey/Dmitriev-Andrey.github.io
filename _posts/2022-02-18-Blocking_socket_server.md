@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Blocking socket server
-excerpt: How simple server on blocking socket work
+excerpt: Principles of work of a simple server using blocking sockets.
 ---
 ## What is a socket?
 A network socket is a good abstraction for communications on the Internet. But it's a low-level object, because we don't use different protocols, like HTTP, and can implement a more efficient specification for our cases.
@@ -218,4 +218,4 @@ The client is easier than the server. We create a socket, input and output strea
 
 Most servers have similar logic. But what if we want to handle a lot of clients? Hundreds of thousands! We create a lot of threads, or if we use a thread pool all threads will be busy. We will solve this problem in the next article.
 
-All code is here: https://github.com/Dmitriev-Andrey/sockets
+All code is here: [https://github.com/Dmitriev-Andrey/sockets](https://github.com/Dmitriev-Andrey/sockets)
